@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Food Intake</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+<body>
+    <div class="banner">
+        <div class="navbar">
+            <a href="{% url 'HomePage' %}">
+            <img src="{% static 'img/BFI_LOGO.png' %}" class="logo">
+            </a>
+            <ul>
+                <li><a href="{% url 'HomePage' %}">About Us</a></li>
+                <li><a href="{% url 'MyAccountPage' %}">Account</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>KNOW MORE ABOUT YOUR FOOD</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for food...">
+                <button>Search</button>
+            </div>
+            <div class="buttons">
+                <button class="category-button">CATEGORY</button>
+                <button class="random-button">RANDOM</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nutritionist Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Biome", sans-serif; /* Use "Biome" font, and fall back to sans-serif if it's not available */
+        }
+
+        .banner {
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/banner.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: fixed;    
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .content {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            color: #FF9F00;
+        }
+
+        .content h1 {
+            font-size: 70px;
+            margin-top: 80px;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1b1717;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Use flexbox to arrange input fields side by side */
+        .input-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            flex: 1; /* Take up equal space */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .gender-container {
+            flex-basis: 100%; /* Full width for gender */
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Added styles for gender radio buttons */
+        .gender-label {
+            display: inline-block;
+            flex-basis: 48%; /* 48% width for each radio button */
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #FF9F00;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: #FF9F00;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner"></div>
+    <div class="content">
+        <h1>Register Nutritionist</h1><br>
+        <div class="form-container">
+            <form action="/user/register/nutritionist/" method="POST">
+               
+                
+                <div class="input-container">
+                    <input type="text" id="full-name" name="full-name" placeholder="Full Name" required>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+
+                <div class="input-container">
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                </div>
+
+                <div class="input-container">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                </div>
+
+                <div class="gender-container">
+                    <label>Select Gender:</label>
+                    <label class="gender-label"><input type="radio" name="gender" value="male"> Male</label>
+                    <label class="gender-label"><input type="radio" name="gender" value="female"> Female</label>
+                </div>
+                <br>
+
+                <!-- Other nutritionist-specific registration fields -->
+
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <p>Already have an account? <a href="{% url 'SignInPage' %}"">Log in</a></p>
+    </div>
+</body>
+</html>

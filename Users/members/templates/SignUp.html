@@ -1,0 +1,102 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+	<link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Sign up</title>
+</head>
+<body>
+    <div class="banner"></div>
+    <div class="content">
+        <h1>Sign Up</h1><br>
+        <div class="form-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form action="#" method="POST">
+				{% csrf_token %}         
+                <div class="input-container">
+                    <input type="text" id="fname" name="fname" placeholder="Full Name" required>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+
+                <div class="input-container">
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="tel" placeholder="+63 " pattern="[0-9]{10}" name="phoneNum" id="phoneNum" required>
+                </div>
+
+                <div class="input-container">
+                    <input type="password" id="pass1" name="pass1" placeholder="Password" required>
+                    <input type="password" id="pass2" name="pass2" placeholder="Confirm Password" required>
+                </div>
+
+                <div class="gender-container">
+                    <label>Select Gender:</label>
+                    <label class="gender-label"><input type="radio" name="gender" value="male"> Male</label>
+                    <label class="gender-label"><input type="radio" name="gender" value="female"> Female</label>
+                </div>
+                <br>
+
+                <script>
+                    // Function to clear password fields if they do not match
+                    function clearPasswordFields() {
+                        var pass1 = document.getElementById("pass1");
+                        var pass2 = document.getElementById("pass2");
+                        pass1.value = "";
+                        pass2.value = "";
+                    }
+                
+                    // Add an event listener to the form submission
+                    document.querySelector('form').addEventListener('submit', function (event) {
+                        var pass1 = document.getElementById("pass1").value;
+                        var pass2 = document.getElementById("pass2").value;
+                
+                        if (pass1 !== pass2) {
+                            event.preventDefault(); // Prevent form submission
+                            clearPasswordFields();
+                            alert("Your Password and Confirm Password are not the same!");
+                        }
+                    });
+
+                    // Function to clear the username field if it already exists
+                    function clearUsernameField() {
+                        var username = document.getElementById("username");
+                        username.value = "";
+                    }
+
+                    // Check if the username field already exists and clear it
+                    document.querySelector('form').addEventListener('submit', function (event) {
+                        var usernameExists = "{{ username_exists }}"; // Replace with the variable that indicates if the username exists
+
+                        if (usernameExists === "True") {
+                        event.preventDefault();
+                        clearUsernameField();
+                        alert("Username already exists. Please choose a different username.");
+                        }
+                    });
+
+                </script>
+
+                <!-- Other nutritionist-specific registration fields -->
+
+                <button type="submit">Create Account</button>
+            </form>
+			<p>Already have an account? <a href="{% url 'SignInPage' %}">Sign in</a></p>
+        </div>
+    </div>
+</body>
+</html>
