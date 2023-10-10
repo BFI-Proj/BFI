@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -18,3 +19,11 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.username
+
+class FoodItem(models.Model):
+    name = models.CharField(max_length=255)
+    ingredients = models.TextField()
+    category = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name

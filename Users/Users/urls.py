@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from members import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.LoginPage, name='SignInPage'),
@@ -27,5 +28,16 @@ urlpatterns = [
     path('SignUpNutri/', views.Nutritionist, name='SignUpNutri'),
     path('MyAccount/', views.MyAccount, name='MyAccountPage'),
     path('SignOut/', views.SignOut, name='SignOut'),
+    path('edit_profile/', views.EditProfile, name='EditProfile'),
+    path('update_account', views.update_account, name='update_account'),
+    path('delete_account', views.DeleteAccount, name='DeleteAccount'),
+    path('categories/', views.categories_view, name='categories'),
+    path('add_food/', views.add_food, name='add_food'),
+    path('food_list/', views.food_list, name='food_list'),
+    path('delete_food_item/<int:item_id>/', views.delete_food_item, name='delete_food_item'),
+    path('update_food_item/<int:item_id>/', views.update_food_item, name='update_food_item'),
 
+    
+    
 ]
+
