@@ -28,21 +28,21 @@ def SignUpPage(request):
       messages.error(request, "Username already exists. Please choose a different username.")
       username_exists = "True"
       return redirect('SignUpPage')  # Redirect back to the signup page with an error message
- 
+
     if pass1!=pass2:
       messages.error(request, "Your Password and Confirm Password are not the same!")
       return redirect('SignUpPage')  # Redirect back to the signup page with an error message
       
     else:
-       # Create the User instance
+      # Create the User instance
       my_user=User.objects.create_user(uname,email,pass1)
       my_user.save()
 
-       # Create the UserProfile instance
+      # Create the UserProfile instance
       user_profile = UserProfile(full_name=fname, username=uname, email=email, phone_number=pnum, password=pass1, gender=gender)
       user_profile.save()
 
-      return redirect('SignInPage')
+    return redirect('SignInPage')
 
   return render (request,'SignUp.html')
 
