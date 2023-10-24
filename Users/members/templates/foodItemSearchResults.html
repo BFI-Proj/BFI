@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Item Search Results</title>
+
+    <!-- Include your CSS file -->
+    <link rel="stylesheet" type="text/css" href="{% static 'foodSearchResults.css' %}">
+</head>
+<body>
+    <div class="content">
+        <h1>Food Item Search Results</h1>
+
+        {% if results %}
+            <h2>Search Results:</h2>
+            {% for item in results %}
+                <div class="results-container">
+                    <strong>{{ item.name }}</strong> (Category: {{ item.category }})
+                    <br>
+                    Ingredients: {{ item.ingredients }}
+                    <!-- You can add an image here if needed -->
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+        
+        <div class="button-container">
+            <div class="button">
+                <form method="get" action="{% url 'food_item_search_results' %}">
+                    {{ form.as_p }}
+                    <button type="submit">Display all current Items</button>
+                </form>
+            </div>
+            <div class="button">
+                <a href="{% url 'FoodPage' %}" class="back-link">Go Back</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
