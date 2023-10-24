@@ -1,0 +1,92 @@
+.content {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("img/banner.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    color:#FF9F00;
+}
+
+/* Style the search results container */
+.results-container {
+    background: transparent; /* Make it transparent */
+    padding: 20px;
+    border: 2px solid #FF9F00; /* Add border with desired color */
+    border-radius: 25px; /* Add border radius */
+    box-shadow: none; /* Remove box-shadow */
+    text-align: center;
+    color: #FF9F00; /* Text color */
+    margin: 5px;
+}
+
+
+/* Style the search results */
+.results ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Style the list items */
+.results li {
+    margin-bottom: 20px;
+}
+
+/* Style the button container */
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; /* Adjust the margin as needed */
+}
+
+/* Style the "Display all current Items" button */
+.button button {
+    height: 40px;
+    background: transparent; /* Make the background transparent */
+    border: 2px solid #FF9F00; /* Add border with desired color */
+    color: #FF9F00; /* Text color */
+    border-radius: 25px; /* Add border radius */
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 10px; /* Add margin to separate the button from the link */
+}
+
+.button button:hover {
+    background-color: #FF9F00; /* Change the background color on hover */
+    color: #fff; /* Change the text color on hover */
+}
+
+/* Style the "Go Back to Homepage" link */
+.button a.back-link {
+    color: #FF9F00; /* Text color */
+    text-decoration: none;
+    border: 2px solid #FF9F00; /* Add border with desired color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 25px; /* Add border radius */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button a.back-link:hover {
+    background-color: #FF9F00; /* Change the background color on hover */
+    color: #fff; /* Change the text color on hover */
+}
+
+
+
