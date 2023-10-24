@@ -19,6 +19,9 @@ h1{
     color:#FF9F00;
 }
 
+.content h2{
+    color:#FF9F00;
+}
 /* Style the search results container */
 .results-container {
     background: transparent; /* Make it transparent */
