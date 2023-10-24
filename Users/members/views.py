@@ -17,6 +17,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST, require_http_methods
+from .forms import FoodItemSearchForm
+from django.db.models import Q
 
 
 
@@ -217,3 +219,36 @@ def update_food_item(request, item_id):
 
     return JsonResponse({'message': 'Food item updated successfully'})
 
+def category_search(request):
+    form = FoodItemSearchForm(request.GET)
+    results = []
+
+    if form.is_valid():
+        search_query = form.cleaned_data['search_query']
+        results = FoodItem.objects.filter(name__icontains=search_query)
+
+    return render(request, 'food_item_search_results.html', {'form': form, 'results': results})
+
+def food_item_search_results(request):
+    search_query = request.GET.get('search_query', '')
+    filter_category = request.GET.get('filter_category', 'all')
+
+    if search_query:
+        # Create a base query that matches the search query in name or ingredients
+        base_query = Q(name__icontains=search_query) | Q(ingredients__icontains=search_query)
+
+        if filter_category == 'all':
+            results = FoodItem.objects.filter(base_query)
+        elif filter_category == 'healthy':
+            results = FoodItem.objects.filter(base_query, category='Healthy')
+        elif filter_category == 'unhealthy':
+            results = FoodItem.objects.filter(base_query, category='Unhealthy')
+    else:
+        if filter_category == 'all':
+            results = FoodItem.objects.all()
+        elif filter_category == 'healthy':
+            results = FoodItem.objects.filter(category='Healthy')
+        elif filter_category == 'unhealthy':
+            results = FoodItem.objects.filter(category='Unhealthy')
+
+    return render(request, 'foodItemSearchResults.html', {'results': results, 'search_query': search_query})
