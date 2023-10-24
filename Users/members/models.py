@@ -23,7 +23,8 @@ class UserProfile(models.Model):
 class FoodItem(models.Model):
     name = models.CharField(max_length=255)
     ingredients = models.TextField()
-    category = models.CharField(max_length=255)
+    category = models.CharField(max_length=255, default="Uncategorized")  # Add a default value
 
     def __str__(self):
         return self.name
+    
