@@ -18,15 +18,17 @@
 </head>
 <body>
     <div class="container">
+        <p><a href="{% url 'FoodPage' %}" class="edit-profile-button">Back</a></p>
         <h1>View Profile</h1>
         <img src="{% static 'img/raya.png' %}" alt="Profile Picture" class="profile-picture">
         <p>Welcome to your profile page. Here, you can view your profile details and information.</p>
 
-        <p><strong>Name:</strong> Loraine</p>
-        <p><strong>Email:</strong> lor@example.com</p>
-        <p><strong>Username:</strong> lorkeyy</p>
+            <p><strong>Username:</strong> {{ user_data.username }}</p>
+            <p><strong>Email:</strong> {{ user_data.email }}</p>
+            
+    
 
-        <p><a href="#">Edit Profile</a></p>
+        <p><a href="{% url 'EditProfile' %}" class="edit-profile-button">Edit Profile</a></p>
         <p><a href="{% url 'SignOut' %}">Log Out</a></p>
     </div>
 </body>

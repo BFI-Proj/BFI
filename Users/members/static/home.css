@@ -125,6 +125,7 @@ main {
 .buttons .random-button {
     margin-left: 10px;
     margin-right: 10px;
+    
 }
 
 /* Adjust margin between search input and buttons */
@@ -135,6 +136,6 @@ main {
     margin-top: 30px;
 }
 
-.category-button:hover, .random-button:hover, .search-bar button:hover {
-    background-color: #FF9F00;
-}
+
+
+

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Categorization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/img/banner.jpg");
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: azure;
+            margin-top: 2%;
+            padding: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        li {
+            margin: 5px 5px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .errors {
+            color: #ff0000;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: block;
+            justify-content: space-between;
+        }
+
+        /* Additional CSS styles for the food list container */
+        #food-list {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        #food-items-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #food-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .food-item,
+        .food-ingredients,
+        .food-category {
+            font-size: 16px;
+            margin: 5px 0;
+            padding: 20px;
+        }
+
+        .edit-button,
+        .delete-button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .edit-button:hover,
+        .delete-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="food-form">
+        <ul>
+            {% for category in categories %}
+                <li>{{ category }}</li>
+            {% endfor %}
+        </ul>
+        <form id="add-food-form" method="post" action="{% url 'add_food' %}">
+            {% csrf_token %}
+            <label for="food-name">Food Name:</label>
+            <input type="text" id="food-name" name="food-name" required>
+            
+            <label for="food-ingredients">Ingredients:</label>
+            <input type="text" id="food-ingredients" name="food-ingredients" required>
+            
+            <label for="food-category">Category:</label>
+            <select id="food-category" name="food-category" required>
+                <option value="Healthy">Healthy</option>
+                <option value="Unhealthy">Unhealthy</option>
+            </select>
+            
+            <button type="submit">Add Food</button>
+        </form>
+    </div>
+    <div id="food-list">
+        <h2>Food List</h2>
+        <div id="food-items-container">
+            <!-- Inside the food list container -->
+            <ul id="food-items">
+                {% for food_item in food_items %}
+                <form method="POST" action="{% url 'update_food_item' item_id=food_item.id %}">
+                    {% csrf_token %}
+                    <input type="text" name="edit-food-name" value="{{ food_item.name }}">
+                    <input type="text" name="edit-food-ingredients" value="{{ food_item.ingredients }}">
+                    <label for="edit-food-category">Category:</label>
+                    <select id="edit-food-category" name="edit-food-category" required>
+                        <option value="Healthy" {% if food_item.category == "Healthy" %}selected{% endif %}>Healthy</option>
+                        <option value="Unhealthy" {% if food_item.category == "Unhealthy" %}selected{% endif %}>Unhealthy</option>
+                    </select>
+                    <input type="submit" value="Update">
+                    <!-- Delete button -->
+                    <button type="button" class="delete-button" data-id="{{ food_item.id }}" onclick="deleteFoodItem(event, {{ food_item.id }})">Delete</button>
+                </form>
+                
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="home-button-container">
+            <p><a href="{% url 'FoodPage' %}" class="edit-profile-button">Home</a></p>
+        </div>
+    </div>
+    
+    <div id="success-message" style="display: none;">
+        <p style="color: green;">Food item deleted successfully!</p>
+    </div>
+
+    <script>
+        // Function to handle the Delete button click
+        function deleteFoodItem(event, item_id) {
+    event.preventDefault();
+
+    fetch(`/delete_food_item/${item_id}/`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => {
+        if (response.status === 204) {
+            // Remove the food item from the DOM
+            const foodItemElement = document.getElementById(`food-item-${item_id}`);
+            foodItemElement.remove();
+
+            // Show the success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+
+            // Hide the success message after a few seconds (e.g., 3 seconds)
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        } else {
+            console.error('Failed to delete food item');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+function updateFoodItem(item_id) {
+    var form = document.getElementById('edit-food-form-' + item_id);
+    form.style.display = 'block';
+}
+    </script>
+</body>
+</html>
