@@ -19,12 +19,25 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.username
+    
+def upload_to_img_directory(instance, filename):
+    # This function defines the subdirectory within your MEDIA_ROOT/img
+    # where uploaded images will be stored. Uploaded files will be in the MEDIA_ROOT/img folder.
+    return f'img/{filename}'
+
+class YourModel(models.Model):
+    image = models.ImageField(upload_to=upload_to_img_directory)
 
 class FoodItem(models.Model):
     name = models.CharField(max_length=255)
     ingredients = models.TextField()
     category = models.CharField(max_length=255, default="Uncategorized")  # Add a default value
+    image = models.ImageField(upload_to='img/', default='', blank=False, null=False)
 
     def __str__(self):
         return self.name
     
+    # models.py
+
+
+
