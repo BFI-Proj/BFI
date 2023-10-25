@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse,redirect
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from .models import UserProfile
 from django.contrib.auth import authenticate,login,logout
@@ -19,6 +20,8 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST, require_http_methods
 from .forms import FoodItemSearchForm
 from django.db.models import Q
+import random
+from django.core.files.storage import FileSystemStorage
 
 
 
@@ -159,12 +162,14 @@ def add_food(request):
         food_name = request.POST.get('food-name')
         food_ingredients = request.POST.get('food-ingredients')
         food_category = request.POST.get('food-category')
+        food_image = request.FILES.get('food-image')  # Retrieve the uploaded image
 
         # Create a new FoodItem and save it to the database
         new_food_item = FoodItem(
             name=food_name,
             ingredients=food_ingredients,
-            category=food_category
+            category=food_category,
+            image=food_image,  # Assign the uploaded image to the 'image' field
         )
         new_food_item.save()
 
@@ -176,7 +181,6 @@ def add_food(request):
     food_items = FoodItem.objects.all()  # Retrieve food items from the database
 
     return render(request, 'categories.html', {'categories': categories, 'food_items': food_items})
-
 
 def food_list(request):
     food_items = FoodItem.objects.all()  # Retrieve all food items from the database
@@ -207,6 +211,10 @@ def update_food_item(request, item_id):
     food_item.name = request.POST.get('edit-food-name')
     food_item.ingredients = request.POST.get('edit-food-ingredients')
     food_item.category = request.POST.get('edit-food-category')
+    food_image = request.FILES.get('edit-food-image')  # Retrieve the uploaded image
+
+    if food_image:  # Check if a new image was uploaded
+        food_item.image = food_image  # Assign the uploaded image to the 'image' field
 
     # Validate the updated object
     try:
@@ -252,3 +260,21 @@ def food_item_search_results(request):
             results = FoodItem.objects.filter(category='Unhealthy')
 
     return render(request, 'foodItemSearchResults.html', {'results': results, 'search_query': search_query})
+
+def random_item(request):
+    # Get a random item from the database
+    random_item = FoodItem.objects.order_by('?').first()
+    
+    context = {
+        'random_item': random_item
+    }
+    return render(request, 'randomItem.html', context)
+
+def display_food_items(request):
+    # Query your database to get the list of food items
+    food_items = FoodItem.objects.all()  # Change this query to match your model
+
+    return render(request, 'DisplayFoodItems.html', {'food_items': food_items})
+
+
+
