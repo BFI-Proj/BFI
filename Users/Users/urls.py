@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from members import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,8 +39,10 @@ urlpatterns = [
     path('update_food_item/<int:item_id>/', views.update_food_item, name='update_food_item'),
     path('category/search/', views.category_search, name='category_search'),
     path('foodItemSearchResults/', views.food_item_search_results, name='food_item_search_results'),
-
+    path('randomItem/', views.random_item, name='random_item'),
+    path('displayFoodItems/', views.display_food_items, name='display_food_items'),
     
 ]
 
-
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
