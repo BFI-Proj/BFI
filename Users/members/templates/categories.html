@@ -90,24 +90,58 @@
 
         /* Additional CSS styles for the food list container */
         #food-list {
-            background-color: #ffffff;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: 20px auto;
-        }
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        #food-items-container {
-            max-height: 400px;
-            overflow-y: auto;
-        }
+#food-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
-        #food-items {
-            list-style: none;
-            padding: 0;
-        }
+.food-item {
+    background-color: #fff;
+    border: 2px solid #FF9F00;
+    border-radius: 25px;
+    margin: 10px;
+    max-width: 345px; /* Adjust the maximum width as needed */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
 
+.card-image {
+    max-height: 140px; /* Adjust image height as needed */
+    overflow: hidden;
+    text-align: center;
+}
+
+.card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.card-details {
+    padding: 20px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
         .food-item,
         .food-ingredients,
         .food-category {
@@ -141,13 +175,16 @@
                 <li>{{ category }}</li>
             {% endfor %}
         </ul>
-        <form id="add-food-form" method="post" action="{% url 'add_food' %}">
+        <form id="add-food-form" method="post" action="{% url 'add_food' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="food-name">Food Name:</label>
             <input type="text" id="food-name" name="food-name" required>
             
             <label for="food-ingredients">Ingredients:</label>
             <input type="text" id="food-ingredients" name="food-ingredients" required>
+        
+            <label for="food-image">Image:</label>
+            <input type="file" id="food-image" name="food-image" accept="image/*" required>
             
             <label for="food-category">Category:</label>
             <select id="food-category" name="food-category" required>
@@ -173,9 +210,55 @@
                         <option value="Healthy" {% if food_item.category == "Healthy" %}selected{% endif %}>Healthy</option>
                         <option value="Unhealthy" {% if food_item.category == "Unhealthy" %}selected{% endif %}>Unhealthy</option>
                     </select>
+                    <!-- Existing image -->
+                    {% if food_item.image %}
+                    <img src="{{ item.image.url }}" alt="Food Image">
+                    {% else %}
+                    <p>No image available</p>
+                    {% endif %}
                     <input type="submit" value="Update">
                     <!-- Delete button -->
-                    <button type="button" class="delete-button" data-id="{{ food_item.id }}" onclick="deleteFoodItem(event, {{ food_item.id }})">Delete</button>
+                    <script>
+                        // Function to handle the Delete button click
+                        function deleteFoodItem(event, item_id) {
+                            event.preventDefault();
+                    
+                            fetch(`/delete_food_item/${item_id}/`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRFToken': getCookie('csrftoken') // Get the CSRF token using a function
+                                }
+                            })
+                            .then(response => {
+                                if (response.status === 204) {
+                                    // Remove the food item from the DOM
+                                    const foodItemElement = document.getElementById(`food-item-${item_id}`);
+                                    foodItemElement.remove();
+                    
+                                    // Show the success message
+                                    const successMessage = document.getElementById('success-message');
+                                    successMessage.style.display = 'block';
+                    
+                                    // Hide the success message after a few seconds (e.g., 3 seconds)
+                                    setTimeout(() => {
+                                        successMessage.style.display = 'none';
+                                    }, 3000);
+                                } else {
+                                    console.error('Failed to delete food item');
+                                }
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                        }
+                    
+                        // Function to get the CSRF token from cookies
+                        function getCookie(name) {
+                            var value = "; " + document.cookie;
+                            var parts = value.split("; " + name + "=");
+                            if (parts.length == 2) return parts.pop().split(";").shift();
+                        }
+                    </script>
                 </form>
                 
                 {% endfor %}
