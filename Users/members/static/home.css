@@ -74,6 +74,7 @@ main {
     transform: translateY(-50%);
     text-align: center;
     color: #FF9F00;
+    align-items: center;
 }
 .content h1{
     font-size: 70px;
@@ -91,17 +92,51 @@ main {
     align-items: center;
     justify-content: center;
     margin-top: 30px;
+    border-radius: 8px;
+    border: 1px #FF9F00;
+    height: 15px;
+    width: 40px;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input[type="text"] {
+    width: 70%;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    text-align: center; /* Center the text within the input */
+    margin-left: 15%;
 }
 
 /* Reshaped search input */
 .search-bar input[type="text"] {
-    width: 60%; /* Increase the width for a more rectangular shape */
+    width: 40%; /* Increase the width for a more rectangular shape */
     height: 40px; /* Adjust the height as needed */
     padding: 10px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     color: #000;
+}
+
+.search-form button {
+    width: 100px; /* Adjust the width as needed */
+    height: 50px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #FF9F00;
+    background: transparent;
+    color: #FF9F00;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 27px;
 }
 
 /* Updated styles for buttons */
@@ -118,6 +153,7 @@ main {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    color: #FF9F00;
 }
 
 /* Ensure consistent button size */
@@ -129,12 +165,11 @@ main {
 }
 
 /* Adjust margin between search input and buttons */
-.search-bar input[type="text"] {
-    margin-right: 10px; /* Add margin to separate input and buttons */
-}
+
 .buttons {
     margin-top: 30px;
 }
+
 
 
 

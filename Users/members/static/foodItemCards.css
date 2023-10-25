@@ -1,0 +1,93 @@
+html {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("img/banner.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: auto; /* Add a scrollbar when content overflows */
+}
+
+.card {
+    border: 2px solid #FF9F00;
+    border-radius: 25px;
+    margin: 10px;
+    max-width: 345px; /* Adjust the maximum width as needed */
+    background-color: #FF9F00;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.card-image {
+    max-height: 140px; /* Adjust image height as needed */
+    overflow: hidden;
+    text-align: center;
+}
+
+.card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.card-details {
+    padding: 10px;
+}
+
+h1 {
+    color: #FF9F00;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+/* Add a scroll function for the card container */
+.card-container {
+    max-height: 70vh; /* Adjust the maximum height as needed */
+    overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+}
+/* Style the buttons for search results page */
+.buttons .display-button,
+.buttons .food-button {
+    width: auto; /* Remove fixed width to make buttons adjust to content */
+    padding: 15px 20px; /* Adjust padding as needed */
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #FF9F00;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    color: #FF9F00;
+}
+
+/* Ensure consistent button size */
+.buttons .display-button,
+.buttons .food-button {
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+/* Adjust margin between search input and buttons */
+
+.buttons {
+    margin-top: 30px;
+}
+

@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Food Item</title>
+
+    <!-- Use the same CSS file as the original card display -->
+    <link rel="stylesheet" type="text/css" href="{% static 'foodItemCards.css' %}">
+</head>
+<body>
+    <div class="content">
+        <h1>Random Food Item</h1>
+
+        {% if random_item %}
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-image">
+                        {% if random_item.image %}
+                            <img src="{{ random_item.image.url }}" alt="{{ random_item.name }}">
+                        {% else %}
+                            <p>No image available</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-details">
+                        <h2>{{ random_item.name }}</h2>
+                        <p>Category: {{ random_item.category }}</p>
+                        <p>Ingredients: {{ random_item.ingredients }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %} <!-- Add this line to close the if block -->
+        <div class="buttons">
+            <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
