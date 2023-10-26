@@ -33,11 +33,11 @@ class FoodItem(models.Model):
     ingredients = models.TextField()
     category = models.CharField(max_length=255, default="Uncategorized")  # Add a default value
     image = models.ImageField(upload_to='img/', default='', blank=False, null=False)
+    description = models.TextField(default="No Description")  # Add a description field
 
     def __str__(self):
         return self.name
     
     # models.py
-
 
 
