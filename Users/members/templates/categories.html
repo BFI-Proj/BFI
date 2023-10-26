@@ -116,6 +116,13 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
+#food-description {
+        width: 90%; /* You can adjust the width as needed */
+    }
+
+#add-food-form {
+        margin-bottom: 20px; /* You can adjust the margin as needed */
+    }
 
 .card-image {
     max-height: 140px; /* Adjust image height as needed */
@@ -179,19 +186,22 @@ p {
             {% csrf_token %}
             <label for="food-name">Food Name:</label>
             <input type="text" id="food-name" name="food-name" required>
-            
+        
             <label for="food-ingredients">Ingredients:</label>
             <input type="text" id="food-ingredients" name="food-ingredients" required>
         
+            <label for="food-description">Description:</label>
+            <input type="text" id="food-description" name="food-description" required>
+        
             <label for="food-image">Image:</label>
             <input type="file" id="food-image" name="food-image" accept="image/*" required>
-            
+        
             <label for="food-category">Category:</label>
             <select id="food-category" name="food-category" required>
                 <option value="Healthy">Healthy</option>
                 <option value="Unhealthy">Unhealthy</option>
             </select>
-            
+        
             <button type="submit">Add Food</button>
         </form>
     </div>
@@ -205,6 +215,8 @@ p {
                     {% csrf_token %}
                     <input type="text" name="edit-food-name" value="{{ food_item.name }}">
                     <input type="text" name="edit-food-ingredients" value="{{ food_item.ingredients }}">
+                    <label for="edit-food-description">Description:</label>
+                    <textarea name="edit-food-description">{{ food_item.description }}</textarea>  <!-- Display the description field -->
                     <label for="edit-food-category">Category:</label>
                     <select id="edit-food-category" name="edit-food-category" required>
                         <option value="Healthy" {% if food_item.category == "Healthy" %}selected{% endif %}>Healthy</option>
@@ -216,7 +228,7 @@ p {
                     {% else %}
                     <p>No image available</p>
                     {% endif %}
-                    <input type="submit" value="Update">
+                    
                     <!-- Delete button -->
                     <script>
                         // Function to handle the Delete button click
@@ -314,3 +326,4 @@ function updateFoodItem(item_id) {
     </script>
 </body>
 </html>
+
