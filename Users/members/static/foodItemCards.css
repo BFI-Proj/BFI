@@ -1,9 +1,10 @@
 html {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("img/banner.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("img/food2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 100%;
+    font-family: 'Biome', sans-serif;
 }
 
 body {
@@ -13,6 +14,7 @@ body {
     align-items: center;
     height: 100vh;
     overflow: auto; /* Add a scrollbar when content overflows */
+    font-family: 'Biome', sans-serif;
 }
 
 .card {
@@ -39,6 +41,7 @@ body {
 
 .card-details {
     padding: 10px;
+    font-family: 'Biome', sans-serif;
 }
 
 h1 {
@@ -60,6 +63,10 @@ p {
 .card-container {
     max-height: 70vh; /* Adjust the maximum height as needed */
     overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+}
+.card-link {
+    text-decoration: none; /* Remove the underline */
+    color: inherit; /* Use the color from the parent element */
 }
 /* Style the buttons for search results page */
 .buttons .display-button,
@@ -90,4 +97,6 @@ p {
 .buttons {
     margin-top: 30px;
 }
+
+
 
