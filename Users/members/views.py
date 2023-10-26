@@ -49,21 +49,21 @@ def SignUpPage(request):
       messages.error(request, "Username already exists. Please choose a different username.")
       username_exists = "True"
       return redirect('SignUpPage')  # Redirect back to the signup page with an error message
-
+ 
     if pass1!=pass2:
       messages.error(request, "Your Password and Confirm Password are not the same!")
       return redirect('SignUpPage')  # Redirect back to the signup page with an error message
       
     else:
-      # Create the User instance
+       # Create the User instance
       my_user=User.objects.create_user(uname,email,pass1)
       my_user.save()
 
-      # Create the UserProfile instance
+       # Create the UserProfile instance
       user_profile = UserProfile(full_name=fname, username=uname, email=email, phone_number=pnum, password=pass1, gender=gender)
       user_profile.save()
 
-    return redirect('SignInPage')
+      return redirect('SignInPage')
 
   return render (request,'SignUp.html')
 
@@ -125,12 +125,12 @@ def update_account(request):
         user.username = new_username
         user.email = new_email
         user.phone = new_phone
-
+        
         if new_password:
             user.set_password(new_password)
         
         user.save()
-
+        
         # Redirect to the user's profile page (you can change the URL as needed)
         return redirect('/MyAccount')
     
@@ -162,19 +162,19 @@ def add_food(request):
         food_name = request.POST.get('food-name')
         food_ingredients = request.POST.get('food-ingredients')
         food_category = request.POST.get('food-category')
-        food_image = request.FILES.get('food-image')  # Retrieve the uploaded image
+        food_image = request.FILES.get('food-image')
+        food_description = request.POST.get('food-description')  # Retrieve the description field
 
-        # Create a new FoodItem and save it to the database
         new_food_item = FoodItem(
             name=food_name,
             ingredients=food_ingredients,
             category=food_category,
-            image=food_image,  # Assign the uploaded image to the 'image' field
+            image=food_image,
+            description=food_description,  # Assign the description to the 'description' field
         )
         new_food_item.save()
 
-        # Redirect back to the food categorization page or any other appropriate page
-        return redirect('food_list')  # Replace with the appropriate URL name
+        return redirect('food_list') # Replace with the appropriate URL name
 
     # If not a POST request, render the food categorization page with existing data
     categories = []  # Replace with your categories data
@@ -209,6 +209,7 @@ def update_food_item(request, item_id):
 
     # Update the attributes based on the form data
     food_item.name = request.POST.get('edit-food-name')
+    food_item.description = request.POST.get('edit-food-description')
     food_item.ingredients = request.POST.get('edit-food-ingredients')
     food_item.category = request.POST.get('edit-food-category')
     food_image = request.FILES.get('edit-food-image')  # Retrieve the uploaded image
@@ -277,4 +278,17 @@ def display_food_items(request):
     return render(request, 'DisplayFoodItems.html', {'food_items': food_items})
 
 
+def categories_view(request):
+    food_items = FoodItem.objects.all()
+    return render(request, 'categories.html', {'food_items': food_items})
 
+def item_page(request, item_id):
+    # Retrieve the FoodItem object with the given item_id
+    item = FoodItem.objects.get(pk=item_id)
+
+    # Pass the item to the template
+    context = {
+        'item': item,
+    }
+
+    return render(request, 'itemPage.html', context)
