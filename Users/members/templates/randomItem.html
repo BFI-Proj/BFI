@@ -16,20 +16,22 @@
 
         {% if random_item %}
             <div class="card-container">
-                <div class="card">
-                    <div class="card-image">
-                        {% if random_item.image %}
-                            <img src="{{ random_item.image.url }}" alt="{{ random_item.name }}">
-                        {% else %}
-                            <p>No image available</p>
-                        {% endif %}
+                <a href="{% url 'item_page' random_item.id %}">
+                    <div class="card">
+                        <div class="card-image">
+                            {% if random_item.image %}
+                                <img src="{{ random_item.image.url }}" alt="{{ random_item.name }}">
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                        </div>
+                        <div class="card-details">
+                            <h2 style="text-decoration: none; color: inherit;">{{ random_item.name }}</h2>
+                            <p style="text-decoration: none; color: inherit;">Category: {{ random_item.category }}</p>
+                            <p style="text-decoration: none; color: inherit;">Ingredients: {{ random_item.ingredients }}</p>
+                        </div>
                     </div>
-                    <div class="card-details">
-                        <h2>{{ random_item.name }}</h2>
-                        <p>Category: {{ random_item.category }}</p>
-                        <p>Ingredients: {{ random_item.ingredients }}</p>
-                    </div>
-                </div>
+                </a>
             </div>
         {% endif %} <!-- Add this line to close the if block -->
         <div class="buttons">
