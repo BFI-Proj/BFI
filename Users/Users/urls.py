@@ -41,6 +41,7 @@ urlpatterns = [
     path('foodItemSearchResults/', views.food_item_search_results, name='food_item_search_results'),
     path('randomItem/', views.random_item, name='random_item'),
     path('displayFoodItems/', views.display_food_items, name='display_food_items'),
+    path('item/<int:item_id>/', views.item_page, name='item_page'),
     
 ]
 
