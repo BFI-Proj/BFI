@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Details</title>
+
+    <!-- Include your CSS file -->
+    <link rel="stylesheet" type="text/css" href="{% static 'itemPage.css' %}">
+</head>
+<body>
+    <div class="content">
+        <h1>Item Details</h1>
+
+        <div class="card">
+            <div class="card-image">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+            </div>
+            <div class="card-details">
+                <h2>{{ item.name }}</h2>
+                <p>Category: {{ item.category }}</p>
+                <p>Ingredients: {{ item.ingredients }}</p>
+                <p>Description: {{ item.description }}</p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expandButton = document.querySelector('.expand-button');
+            const card = document.querySelector('.card');
+            expandButton.addEventListener('click', () => {
+                card.classList.toggle('expanded');
+            });
+        });
+    </script>
+</body>
+</html>
