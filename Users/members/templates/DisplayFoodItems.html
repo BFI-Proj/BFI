@@ -16,19 +16,21 @@
         <div class="card-container">
             {% for item in food_items %}
                 <div class="card">
-                    <div class="card-image">
-                        {% if item.image %}
-                            <img src="{{ item.image.url }}" alt="{{ item.name }}">
-                        {% else %}
-                            <p>No image available</p>
-                        {% endif %}
-                    </div>
-                    <div class="card-details">
-                        <h2>{{ item.name }}</h2>
-                        <p>Category: {{ item.category }}</p>
-                        <p>{{ item.description }}</p>
-                        <p>Ingredients: {{ item.ingredients }}</p>
-                    </div>
+                    <a href="{% url 'item_page' item.id %}" style="text-decoration: none; color: inherit;">
+                        <div class="card-image">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                        </div>
+                        <div class="card-details">
+                            <h2>{{ item.name }}</h2>
+                            <p>Category: {{ item.category }}</p>
+                            <p>{{ item.description }}</p>
+                            <p>Ingredients: {{ item.ingredients }}</p>
+                        </div>
+                    </a>
                 </div>
             {% endfor %}
         </div>
@@ -49,5 +51,6 @@
     </script>
 </body>
 </html>
+
 
 
