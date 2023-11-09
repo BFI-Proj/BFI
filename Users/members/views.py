@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import logout
-from .models import FoodItem
+from .models import FoodItem, Review
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ValidationError
@@ -18,7 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST, require_http_methods
-from .forms import FoodItemSearchForm
+from .forms import FoodItemForm, FoodItemSearchForm, ReviewForm
 from django.db.models import Q
 import random
 from django.core.files.storage import FileSystemStorage
@@ -282,13 +282,28 @@ def categories_view(request):
     food_items = FoodItem.objects.all()
     return render(request, 'categories.html', {'food_items': food_items})
 
-def item_page(request, item_id):
-    # Retrieve the FoodItem object with the given item_id
-    item = FoodItem.objects.get(pk=item_id)
 
-    # Pass the item to the template
+@login_required(login_url='SignInPage')
+def item_page(request, item_id):
+    item = get_object_or_404(FoodItem, pk=item_id)
+
+    # Handle the review form submission
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.food_item = item
+            review.save()
+            messages.success(request, 'Your review has been submitted.')
+
+    # Fetch existing reviews for the item
+    reviews = Review.objects.filter(food_item=item)
+
     context = {
         'item': item,
+        'form': ReviewForm(),  # Create an instance of the ReviewForm
+        'reviews': reviews,
     }
 
     return render(request, 'itemPage.html', context)

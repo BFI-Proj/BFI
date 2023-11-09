@@ -19,7 +19,7 @@ body {
 
 .card {
     width: 400px; /* Adjust card width */
-    height: 500px;
+    height: auto;
     border: 2px solid #FF9F00;
     border-radius: 25px;
     margin: 10px;
@@ -99,4 +99,59 @@ p {
 
 .buttons {
     margin-top: 30px;
+}
+
+/* For REVIEWS */
+
+.reviews {
+    margin-top: 20px;
+}
+
+h3 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+}
+
+.review-list {
+    list-style: none;
+    padding: 0;
+}
+
+.review {
+    border: 2px solid #EFEFEF;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+}
+
+.review-header i {
+    margin-right: 10px;
+    color: #FF9F00;
+}
+
+.review-text {
+    font-size: 1rem;
+    margin-left: 23px;
+    padding-top: 8px;
+}
+
+span {
+    font-weight: bold;
+}
+
+/* .review-list.expanded {
+    max-height: none;
+    overflow: auto;
+} */
+
+.review-list {
+    max-height: 200px; /* Set the maximum height for showing only 3 reviews */
+    overflow-y: scroll; /* Enable scrolling when the content exceeds the max height */
 }

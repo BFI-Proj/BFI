@@ -8,6 +8,7 @@
 
     <!-- Include your CSS file -->
     <link rel="stylesheet" type="text/css" href="{% static 'itemPage.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <div class="content">
@@ -27,20 +28,39 @@
                 <p>Ingredients: {{ item.ingredients }}</p>
                 <p>Description: {{ item.description }}</p>
             </div>
+
+            <div class="reviews">
+                <h3>Reviews</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit Review</button>
+                </form>
+    
+                <!-- Display existing reviews -->
+                {% if reviews %}
+                <div class="review-list" style="max-height: 200px; overflow-y: scroll;"> {# Set a fixed max-height with vertical scrolling #}
+                    {% for review in reviews %} {# Loop through all reviews #}
+                    <div class="review">
+                        <div class="review-header">
+                            <i class="fas fa-user"></i>
+                            <span>{{ review.user.username }}</span>
+                        </div>
+                        <div class="review-text">
+                            {{ review.text }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No reviews yet.</p> {# Display this message when there are no reviews #}
+                {% endif %}
+            </div>
         </div>
 
         <div class="buttons">
             <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
-        </div>
+        </div>  
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const expandButton = document.querySelector('.expand-button');
-            const card = document.querySelector('.card');
-            expandButton.addEventListener('click', () => {
-                card.classList.toggle('expanded');
-            });
-        });
-    </script>
 </body>
 </html>
