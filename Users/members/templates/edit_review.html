@@ -1,0 +1,10 @@
+{% extends 'ItemPage.html' %} {% block review_list %}
+<div class="review-list">
+  <h2>Edit Review</h2>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Update Review</button>
+  </form>
+  <a href="{% url 'item_page' review.food_item.id %}">Cancel</a>
+</div>
+{% endblock %}

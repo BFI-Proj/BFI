@@ -146,12 +146,16 @@ span {
     font-weight: bold;
 }
 
-/* .review-list.expanded {
-    max-height: none;
-    overflow: auto;
-} */
+.review-list.expanded {
+    max-height: 200px;
+    overflow-y: scroll;
+} 
 
 .review-list {
     max-height: 200px; /* Set the maximum height for showing only 3 reviews */
     overflow-y: scroll; /* Enable scrolling when the content exceeds the max height */
+}
+
+.fa-edit:before {
+    margin-left: 250px;
 }

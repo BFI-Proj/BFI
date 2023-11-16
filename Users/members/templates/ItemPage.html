@@ -36,15 +36,21 @@
                     {{ form.as_p }}
                     <button type="submit">Submit Review</button>
                 </form>
-    
+                
+                
                 <!-- Display existing reviews -->
                 {% if reviews %}
-                <div class="review-list" style="max-height: 200px; overflow-y: scroll;"> {# Set a fixed max-height with vertical scrolling #}
+                {% block review_list %}
+                <div class="review-list">
                     {% for review in reviews %} {# Loop through all reviews #}
                     <div class="review">
                         <div class="review-header">
                             <i class="fas fa-user"></i>
                             <span>{{ review.user.username }}</span>
+                            {% if request.user == review.user %}
+                                <a href="{% url 'edit_review' item_id=item.id review_id=review.id %}"><i class="fas fa-edit"></i></a>
+                                <a href="{% url 'delete_review' item_id=item.id review_id=review.id %}"><i class="fas fa-trash-alt"></i></a>
+                            {% endif %}
                         </div>
                         <div class="review-text">
                             {{ review.text }}
@@ -52,6 +58,7 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% endblock %}
                 {% else %}
                 <p>No reviews yet.</p> {# Display this message when there are no reviews #}
                 {% endif %}
@@ -62,5 +69,6 @@
             <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
         </div>  
     </div>
+    
 </body>
 </html>

@@ -42,7 +42,8 @@ urlpatterns = [
     path('randomItem/', views.random_item, name='random_item'),
     path('displayFoodItems/', views.display_food_items, name='display_food_items'),
     path('item/<int:item_id>/', views.item_page, name='item_page'),
-    
+    path('item/<int:item_id>/Edit_review/<int:review_id>/', views.edit_review, name='edit_review'),
+    path('item/<int:item_id>/Delete_review/<int:review_id>/', views.delete_review, name='delete_review'),
 ]
 
 if settings.DEBUG:

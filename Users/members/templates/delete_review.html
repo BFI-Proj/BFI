@@ -1,0 +1,13 @@
+{% extends 'ItemPage.html' %}
+
+{% block review_list %}
+  <div class="review-list">
+    <h2 class="review-heading">Delete Review</h2>
+    <p>Are you sure you want to delete the review by <strong>{{ review.user.username }}</strong>?</p>
+    <form method="post" class="delete-review-form">
+      {% csrf_token %}
+      <button type="submit" class="delete-review-button">Delete Review</button>
+    </form>
+    <a href="{% url 'item_page' review.food_item.id %}" class="cancel-link">Cancel</a>
+  </div>
+{% endblock %}

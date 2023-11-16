@@ -22,6 +22,8 @@ from .forms import FoodItemForm, FoodItemSearchForm, ReviewForm
 from django.db.models import Q
 import random
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 
@@ -307,3 +309,47 @@ def item_page(request, item_id):
     }
 
     return render(request, 'itemPage.html', context)
+
+
+@login_required(login_url='SignInPage')
+def edit_review(request, item_id, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Review updated successfully.')
+            return HttpResponseRedirect(reverse('item_page', args=[item_id]))
+    else:
+        form = ReviewForm(instance=review)
+
+    context = {
+        'form': form,
+        'review_id': review.id,
+    }
+
+    return render(request, 'edit_review.html', context)
+
+
+@login_required(login_url='SignInPage')
+def delete_review(request, item_id, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.method == 'POST':
+        food_item_id = None
+        if review.food_item:
+            food_item_id = review.food_item.id
+            review.delete()
+            messages.success(request, 'Review deleted successfully.')
+        else:
+            messages.error(request, 'Error deleting review.')
+
+        if food_item_id:
+            return HttpResponseRedirect(reverse('item_page', args=[food_item_id]))
+
+    context = {
+        'review': review,
+    }
+
+    return render(request, 'delete_review.html', context)
