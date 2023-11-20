@@ -333,7 +333,7 @@ def edit_review(request, item_id, review_id):
 
 
 @login_required(login_url='SignInPage')
-def delete_review(request, item_id, review_id):
+def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
 
     if request.method == 'POST':
@@ -346,7 +346,7 @@ def delete_review(request, item_id, review_id):
             messages.error(request, 'Error deleting review.')
 
         if food_item_id:
-            return HttpResponseRedirect(reverse('item_page', args=[food_item_id]))
+            return redirect('item_page', item_id=food_item_id)
 
     context = {
         'review': review,
