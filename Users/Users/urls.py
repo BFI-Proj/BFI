@@ -44,7 +44,8 @@ urlpatterns = [
     path('item/<int:item_id>/', views.item_page, name='item_page'),
     path('item/<int:item_id>/Edit_review/<int:review_id>/', views.edit_review, name='edit_review'),
     path('item/Delete_review/<int:review_id>/', views.delete_review, name='delete_review'),
-
+    path('healthy-foods/', views.healthy_foods, name='healthy_foods'),
+    path('unhealthy-foods/', views.unhealthy_foods, name='unhealthy_foods'),
 ]
 
 if settings.DEBUG:
