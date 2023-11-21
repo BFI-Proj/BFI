@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Foods</title>
+    <!-- Include your CSS file -->
+    <link rel="stylesheet" type="text/css" href="{% static 'healthyFood.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'foodItemCards.css' %}">
+</head>
+<body>
+    <h1>Healthy Foods</h1>
+
+    <div class="food-container">
+        {% for food in foods %}
+            <div class="food-item">
+                {% if food.image %}
+                    <img src="{{ food.image.url }}" alt="{{ food.name }}">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+                <div class="food-details">
+                    <h2>{{ food.name }}</h2>
+                    <p>{{ food.description }}</p>
+                </div>
+                <!-- Link to the item page -->
+                <a href="{% url 'item_page' food.id %}" style="text-decoration: none; color: inherit;">
+                    <div class="food-details">
+                        <p>Category: {{ food.category }}</p>
+                        <p>Ingredients: {{ food.ingredients }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="reviews-container">
+        {% for review in reviews %}
+            <div class="review">
+                <p>User: {{ review.user.username }}</p>
+                <p>Rating: {{ review.rating }}</p>
+                <p>{{ review.comment }}</p>
+                <button>Edit Review</button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="buttons">
+        <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
+    </div>
+</body>
+</html>
