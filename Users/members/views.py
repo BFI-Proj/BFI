@@ -24,6 +24,7 @@ import random
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import HttpResponse
 
 
 
@@ -353,3 +354,15 @@ def delete_review(request, review_id):
     }
 
     return render(request, 'delete_review.html', context)
+
+def healthy_foods(request):
+    # Retrieve healthy foods from your database or any other source
+    healthy_foods_list = FoodItem.objects.filter(category='Healthy')
+    context = {'foods': healthy_foods_list}
+    return render(request, 'HealthyFood.html', context)
+
+def unhealthy_foods(request):
+    # Retrieve unhealthy foods from your database or any other source
+    unhealthy_foods_list = FoodItem.objects.filter(category='unhealthy')
+    context = {'foods': unhealthy_foods_list}
+    return render(request, 'UnhealthyFood.html', context)
