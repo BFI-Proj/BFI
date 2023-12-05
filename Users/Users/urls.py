@@ -46,6 +46,8 @@ urlpatterns = [
     path('item/Delete_review/<int:review_id>/', views.delete_review, name='delete_review'),
     path('healthy-foods/', views.healthy_foods, name='healthy_foods'),
     path('unhealthy-foods/', views.unhealthy_foods, name='unhealthy_foods'),
+    path('schedule_appointment/', views.schedule_appointment, name='schedule_appointment'),
+
 ]
 
 if settings.DEBUG:

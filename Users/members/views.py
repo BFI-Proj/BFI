@@ -366,3 +366,8 @@ def unhealthy_foods(request):
     unhealthy_foods_list = FoodItem.objects.filter(category='unhealthy')
     context = {'foods': unhealthy_foods_list}
     return render(request, 'UnhealthyFood.html', context)
+
+def schedule_appointment(request):
+    # Handle appointment scheduling logic here
+    # For example, you might render a form to schedule an appointment
+    return render(request, 'schedule_appointment.html')

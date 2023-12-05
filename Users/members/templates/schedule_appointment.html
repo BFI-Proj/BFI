@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHEDULE AN APPOINTMENT</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'appointment.css' %}">
+
+    <!-- Use the same CSS file as the original card display -->
+    <link rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="content">
+        <h1>Schedule an Appointment</h1>
+
+        <form method="post" action="{% url 'schedule_appointment' %}">
+            <!-- Add form fields for appointment scheduling -->
+            <!-- For example: Name, Email, Date, Time, etc. -->
+            <input type="text" name="name" placeholder="Your Name">
+            <input type="email" name="email" placeholder="Your Email">
+            <input type="date" name="date" placeholder="Date">
+            <input type="time" name="time" placeholder="Time">
+            <button class="appointment-form button">Submit Appointment</button>
+        </form>
+        <div class="buttons">
+            <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

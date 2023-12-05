@@ -1,0 +1,181 @@
+/* Global Styles */
+html {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("img/food2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    font-family: 'Biome', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: auto;
+    font-family: 'Biome', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #FF9F00;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.content .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 80%;
+}
+
+.card {
+    width: 80%;
+    max-width: 400px;
+    border: 2px solid #FF9F00;
+    border-radius: 15px;
+    margin: 10px;
+    background-color: #FF9F00;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 20px;
+}
+
+.buttons .display-button,
+.buttons .food-button {
+    width: auto;
+    padding: 15px 35px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: 2px solid #FF9F00;
+    background: transparent;
+    color: #FF9F00;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.buttons .display-button:hover,
+.buttons .food-button:hover {
+    background-color: #FF9F00;
+    color: #fff;
+}
+
+.buttons .food-button {
+    margin-top: 10px;
+}
+
+/* For REVIEWS */
+
+.reviews {
+    margin-top: 20px;
+}
+
+h3 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+    color: #FF9F00;
+}
+
+.review-list {
+    list-style: none;
+    padding: 0;
+}
+
+.review {
+    border: 2px solid #EFEFEF;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+}
+
+.review-header i {
+    margin-right: 10px;
+    color: #FF9F00;
+}
+
+.review-text {
+    font-size: 1rem;
+    margin-left: 23px;
+    padding-top: 8px;
+}
+
+span {
+    font-weight: bold;
+}
+
+/* Add a transition effect for expanding/collapsing reviews */
+.review-list.expanded {
+    max-height: 400px;
+    overflow-y: scroll;
+    transition: max-height 0.3s ease-out;
+}
+
+.review-list.collapsed {
+    max-height: 200px;
+    overflow-y: hidden;
+    transition: max-height 0.3s ease-in;
+}
+
+/* New styles for appointment form */
+.appointment-form {
+    width: 80%;
+    max-width: 600px;
+    margin-top: 20px;
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.appointment-form input[type="text"],
+.appointment-form input[type="email"],
+.appointment-form input[type="date"],
+.appointment-form input[type="time"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #FF9F00;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.appointment-form button[type="submit"] {
+    width: auto;
+    padding: 15px 35px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: 2px solid #FF9F00;
+    background: transparent;
+    color: #FF9F00;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.appointment-form button[type="submit"]:hover {
+    background-color: #FF9F00;
+    color: #fff;
+}
