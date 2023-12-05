@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,29 +7,43 @@
     <title>SCHEDULE AN APPOINTMENT</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'appointment.css' %}">
-
-    <!-- Use the same CSS file as the original card display -->
-    <link rel="stylesheet" type="text/css">
+    
+    <!-- Your JavaScript function for clearing fields -->
+    <script>
+        function clearFields() {
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("time").value = "";
+            document.getElementById("purpose").value = "";
+        }
+    </script>
 </head>
 <body>
     <div class="content">
         <h1>Schedule an Appointment</h1>
 
         <form method="post" action="{% url 'schedule_appointment' %}">
+            {% csrf_token %}
             <!-- Add form fields for appointment scheduling -->
             <!-- For example: Name, Email, Date, Time, etc. -->
-            <input type="text" name="name" placeholder="Your Name">
-            <input type="email" name="email" placeholder="Your Email">
-            <input type="date" name="date" placeholder="Date">
-            <input type="time" name="time" placeholder="Time">
-            <button class="appointment-form button">Submit Appointment</button>
+            <input type="text" id="name" name="name" placeholder="Your Name">
+            <input type="email" id="email" name="email" placeholder="Your Email">
+            <input type="date" id="date" name="date" placeholder="Date">
+            <input type="time" id="time" name="time" placeholder="Time">
+            <textarea id="purpose" name="purpose" placeholder="Purpose of Appointment" rows="4" cols="50"></textarea>   
+            
+            <div class="buttons">
+                <button class="food-button">Submit Appointment</button>
+            </div>
+            <div class="buttons">
+            <button class="food-button" type="button" onclick="clearFields()">Clear</button>
+            </div>
         </form>
+
         <div class="buttons">
             <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
         </div>
     </div>
 </body>
 </html>
-
-
-

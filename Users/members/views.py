@@ -25,6 +25,9 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import HttpResponse
+from .models import Appointment
+from . import models
+from django.db.models import TextField
 
 
 
@@ -371,3 +374,26 @@ def schedule_appointment(request):
     # Handle appointment scheduling logic here
     # For example, you might render a form to schedule an appointment
     return render(request, 'schedule_appointment.html')
+
+def schedule_appointment(request):
+    if request.method == 'POST':
+        # Retrieve form data
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+
+        # Create an Appointment object and save it to the database
+        appointment = Appointment.objects.create(
+            user=request.user,  # Assuming you're using authentication and the user is logged in
+            name=name,
+            email=email,
+            date=date,
+            time=time,
+            purpose = TextField()
+        )
+
+        # Redirect to a success page or wherever you want
+        messages.success(request, 'Appointment is set successfully') # Redirect to a success URL
+
+    return render(request, 'schedule_appointment.html') 
