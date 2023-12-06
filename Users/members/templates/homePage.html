@@ -1,3 +1,5 @@
+
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -93,6 +95,7 @@
             </form>
             <div class="buttons">
                 <a href="{% url 'categories' %}"><button class="category-button">CATEGORY</button></a>
+                
                 <a href="{% url 'schedule_appointment' %}"><button class="random-button">APPOINTMENT</button></a>
             </div>
             <div class="card-container">
@@ -116,8 +119,16 @@
                 {% endfor %}
             </div>
             
-            
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the page is not already on the 'random_item' view
+            if (!window.location.href.includes("{% url 'random_item' %}")) {
+                window.location.href = "{% url 'random_item' %}";
+            }
+        });
+    </script>
+
 </body>
 </html>
