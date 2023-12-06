@@ -271,13 +271,13 @@ def food_item_search_results(request):
     return render(request, 'foodItemSearchResults.html', {'results': results, 'search_query': search_query})
 
 def random_item(request):
-    # Get a random item from the database
-    random_item = FoodItem.objects.order_by('?').first()
-    
+    num_random_items = 4
+    random_items = FoodItem.objects.order_by('?')[:num_random_items]
+
     context = {
-        'random_item': random_item
+        'food_items': random_items
     }
-    return render(request, 'randomItem.html', context)
+    return render(request, 'homePage.html', context)
 
 def display_food_items(request):
     # Query your database to get the list of food items
