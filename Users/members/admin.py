@@ -7,3 +7,4 @@ from .models import Appointment
 admin.site.register(UserProfile)
 admin.site.register(FoodItem)
 admin.site.register(Appointment)
+

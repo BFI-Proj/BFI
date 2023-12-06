@@ -32,6 +32,8 @@ from django.db.models import TextField
 
 
 
+
+
 @login_required(login_url='SignInPage')
 def LandingPage(request):
   return render (request,'LandingPage.html')
@@ -397,3 +399,5 @@ def schedule_appointment(request):
         messages.success(request, 'Appointment is set successfully') # Redirect to a success URL
 
     return render(request, 'schedule_appointment.html') 
+
+    

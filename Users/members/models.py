@@ -53,9 +53,9 @@ class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
-    date = models.DateTimeField()
+    date = models.DateField()
     time = models.TimeField()
     purpose = models.TextField()
 
     def __str__(self):
-         return f"{self.user.username} - {self.date} - {self.time}"
+        return f"{self.user.username} - {self.date} - {self.time}"
