@@ -69,16 +69,16 @@ main {
 
 .content {
     width: 100%;
-    top: 50%;
-    transform: translateY(-15%); /* Adjust the percentage as needed */
+    /* position: absolute; Remove this line */
+    top: 40%;
+    transform: translateY(-15%);
     text-align: center;
     color: #FF9F00;
     align-items: center;
-    margin-top: 50px; /* Add margin-top as needed */
 }
 
 .content h1{
-    font-size: 50px;
+    font-size: 40px;
     margin-top: 80px;
 }
 .content p{
@@ -212,6 +212,8 @@ p {
     font-size: 1rem;
     margin: 10px 0;
 }
+
+
 
 
 
