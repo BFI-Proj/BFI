@@ -273,6 +273,7 @@ def food_item_search_results(request):
 def random_item(request):
     num_random_items = 4
     random_items = FoodItem.objects.order_by('?')[:num_random_items]
+   
 
     context = {
         'food_items': random_items
