@@ -1,0 +1,85 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.content {
+    text-align: center;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    height: 40px;
+    background: transparent;
+    border: 2px solid #FF9F00;
+    color: #FF9F00;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #FF9F00;
+    color: #fff;
+}
+
+.back-link {
+    color: #FF9F00;
+    text-decoration: none;
+    border: 2px solid #FF9F00;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.back-link:hover {
+    background-color: #FF9F00;
+    color: #fff;
+}
+
+.admin-button,
+.user-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.admin-button {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 7px;
+    background-color: #ff9f00;
+    color: #ffffff;
+    margin-right: 5px;
+}
+
+.user-button {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 7px;
+    background-color: #ff9f00;
+    color: #ffffff;
+    margin-left: 5px;
+}
+
+.admin-button:hover,
+.user-button:hover {
+    opacity: 0.8;
+}
