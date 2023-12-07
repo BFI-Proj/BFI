@@ -1,5 +1,5 @@
 from django import forms
-from .models import FoodItem, Review
+from .models import FoodItem, Review, Appointment
 class FoodItemForm(forms.ModelForm):
     class Meta:
         model = FoodItem
@@ -12,3 +12,4 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['text']
+

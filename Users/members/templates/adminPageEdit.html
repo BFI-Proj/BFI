@@ -1,0 +1,133 @@
+<!-- adminPageEdit.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User Profile</title>
+    <!-- Add your CSS styles or link to external stylesheets here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/img/banner.jpg");
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: azure;
+            margin-top: 2%;
+            padding: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .errors {
+            color: #ff0000;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .button-container {
+            display:block;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-dashboard-container">
+        <h1>Edit User Profile</h1>
+
+        {# Display user details for editing #}
+        <form method="post" action="{% url 'AdminPage' %}?user_id={{ user.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="edit">
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+            <br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+            <br>
+
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" value="{{ user_profile.full_name }}" required>
+            <br>
+
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" value="{{ user_profile.phone_number }}" required>
+            <br>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male" {% if user_profile.gender == 'male' %}selected{% endif %}>Male</option>
+                <option value="female" {% if user_profile.gender == 'female' %}selected{% endif %}>Female</option>
+                <option value="prefer_not_to_say" {% if user_profile.gender == 'prefer_not_to_say' %}selected{% endif %}>Prefer Not to Say</option>
+            </select>
+            <br>
+
+            <input type="submit" value="Save">
+        </form>
+
+        {# Add a Cancel link to go back to the admin page #}
+        <a href="{% url 'AdminPage' %}">Cancel</a>
+    </div>
+
+    <!-- Add your scripts or link to external scripts here -->
+</body>
+</html>
+
+

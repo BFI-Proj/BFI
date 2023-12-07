@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here -->
+    <link rel="stylesheet" href="{% static 'choose.css' %}">
+</head>
+<body>
+    <div class="content">
+        <h1>Choose Your Login</h1>
+        
+        <div class="button-container">
+            <a href="{% url 'AdminLogin' %}">
+                <button class="admin-button">Admin (Testing Purposes)</button>
+            </a>
+
+            <a href="{% url 'SignInPage' %}">
+                <button class="user-button">Users</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

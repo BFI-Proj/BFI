@@ -1,0 +1,56 @@
+<!-- AdminPage.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'AdminPage.css' %}">
+</head>
+<body>
+    <div class="admin-dashboard-container">
+        <h1>Welcome to the Admin Dashboard</h1>
+
+        <div class="admin-buttons">
+            <a href="{% url 'AdminPageEdit' %}">
+                <button>Edit</button>
+            </a>
+            <a href="{% url 'categories' %}">
+                <button>Add Items</button>
+            </a>
+        </div>
+
+        <form method="post" action="{% url 'AdminPageDelete' %}">
+            {% csrf_token %}
+            
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Full Name</th>
+                        <th>Phone Number</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in all_users %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_users[]" value="{{ user.id }}"></td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.user_profile.full_name }}</td>
+                            <td>{{ user.user_profile.phone_number }}</td>
+                            <td>{{ user.user_profile.gender }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <button type="submit" name="action" value="delete_selected">Delete Selected</button>
+        </form>
+    </div>
+</body>
+</html>

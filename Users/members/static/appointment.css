@@ -1,0 +1,96 @@
+/* Global Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Biome', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("img/food2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+h1, h3 {
+    color: #FF9F00;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.buttons .display-button,
+.buttons .food-button,
+.appointment-form button[type="submit"] {
+    width: auto;
+    padding: 15px 35px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: 2px solid #FF9F00;
+    background: transparent;
+    color: #FF9F00;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.buttons .display-button:hover,
+.buttons .food-button:hover,
+.appointment-form button[type="submit"]:hover {
+    background-color: #FF9F00;
+    color: #fff;
+}
+
+.buttons .food-button {
+    margin-top: 10px;
+}
+
+.appointment-form {
+    width: 80%;
+    max-width: 600px;
+    margin-top: 20px;
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="time"],
+textarea {
+    width: 35%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #FF9F00;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 120px;
+    resize: vertical;
+    display: block; /* Ensure the textarea starts on a new line */
+    margin-left: auto; /* Auto margin to center horizontally */
+    margin-right: auto; /* Auto margin to center horizontally */
+}
+.content {
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: #FF9F00;
+  }
+  
+  .content h1 {
+    font-size: 70px;
+    margin-top: 80px;
+  }

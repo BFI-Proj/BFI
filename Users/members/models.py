@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -48,4 +49,32 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.food_item.name}"
 
+class Appointment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    date = models.DateField()
+    time = models.TimeField()
+    purpose = models.TextField()
 
+    def __str__(self):
+        return f"{self.user.username} - {self.date} - {self.time}"
+    
+
+class AdminProfile(models.Model):
+    
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('prefer_not_to_say', 'Prefer Not to Say'),
+    ]
+
+    full_name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
+    phone_number = models.CharField(max_length=11)
+    password = models.CharField(max_length=128)  # Assuming you are storing hashed passwords
+    gender = models.CharField(max_length=20, choices=GENDER_CHOICES)
+
+    def __str__(self):
+        return self.username

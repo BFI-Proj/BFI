@@ -1,13 +1,78 @@
-{% load static %}
 
+
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balance Food Intake</title>
     <link rel="stylesheet" href="{% static 'home.css' %}">
+    <style>
+        body {
+            font-family: 'Biome', sans-serif; /* Add the font-family to the body */
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around; /* Adjust as needed */
+            margin-top: 20px; /* Add space between the search results and cards */
+        }
+
+        .card {
+            width: 22%; /* Adjust width to fit at least 4 cards per row */
+            margin: 10px; /* Adjust margin as needed */
+            border: 2px solid #FF9F00; /* Add border for visibility */
+            border-radius: 15px; /* Optional: Add border-radius for rounded corners */
+            overflow: hidden; /* Ensure images stay within the card */
+        }
+
+        .card-image img {
+            width: 100%; /* Ensure images take full width within the card */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .card-details {
+            padding: 10px;
+            color: black;
+        }
+        .card {
+    border: 2px solid #FF9F00;
+    border-radius: 25px;
+    margin: 10px;
+    max-width: 345px; /* Adjust the maximum width as needed */
+    background-color: #FF9F00;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.card-image {
+    max-height: 140px; /* Adjust image height as needed */
+    overflow: hidden;
+    text-align: center;
+}
+
+.card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.card-details {
+    padding: 10px;
+    font-family: 'Biome', sans-serif;
+}
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="banner">
@@ -28,12 +93,41 @@
                     <button type="submit" class="search-button">Search</button>
                 </div>
             </form>
-            
             <div class="buttons">
-                <a href="{% url 'categories' %}"><button class="category-button">CATEGORY</button></a>
-                <a href="{% url 'random_item' %}"><button class="random-button">RANDOM</button></a>
+                
+                <a href="{% url 'schedule_appointment' %}"><button class="random-button">APPOINTMENT</button></a>
             </div>
+            <div class="card-container">
+                {% for item in food_items %}
+                    <div class="card">
+                        <a href="{% url 'item_page' item.id %}" style="text-decoration: none; color: inherit;">
+                            <div class="card-image">
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                                {% else %}
+                                    <p>No image available</p>
+                                {% endif %}
+                            </div>
+                            <div class="card-details">
+                                <h2>{{ item.name }}</h2>
+                                <p>Category: {{ item.category }}</p>
+                                <!-- Add more details as needed -->
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the page is not already on the 'random_item' view
+            if (!window.location.href.includes("{% url 'random_item' %}")) {
+                window.location.href = "{% url 'random_item' %}";
+            }
+        });
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,111 @@
+<!-- adminPageDelete.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .delete-confirmation {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px; /* Add margin for better spacing */
+        }
+
+        .user-table th,
+        .user-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .user-table th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        a button {
+            background-color: #007bff;
+        }
+
+        /* Add some styles for the checkbox */
+        .user-table input[type="checkbox"] {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="delete-confirmation">
+        <h1>Confirm Deletion</h1>
+        <p>Are you sure you want to delete the selected user(s)?</p>
+
+        <form method="post" action="{% url 'AdminPageDelete'%}">
+            {% csrf_token %}
+            
+            <!-- Add checkboxes to each row in the table -->
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Full Name</th>
+                        <th>Phone Number</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in all_users %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_users[]" value="{{ user.id }}"></td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.user_profile.full_name }}</td>
+                            <td>{{ user.user_profile.phone_number }}</td>
+                            <td>{{ user.user_profile.gender }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <button type="submit" name="action" value="delete_selected">Delete Selected</button>
+        </form>
+        
+        <a href="{% url 'AdminPage' %}"><button>Cancel</button></a>
+    </div>
+</body>
+</html>
+
