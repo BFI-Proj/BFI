@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'LogIn.css' %}">
+    <title>Sign In</title>
+</head>
+<body>
+    <div class="banner"></div>
+    <div class="content">
+        <h1>Sign In</h1><br>
+
+    {% if auth_failed %}
+    <div id="error-alert" class="alert-container">
+        <div class="alert-box alert-danger">
+            <strong>Error!</strong> Username or Password is incorrect.
+            <span class="close" onclick="closeAlert()">&times;</span>
+        </div>
+    </div>
+    <script>
+        function closeAlert() {
+            var alertContainer = document.querySelector('#error-alert');
+            alertContainer.style.display = 'none';
+        }
+    </script>
+    {% endif %}
+        <div class="form-container">
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="input-container">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="input-container">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+                <p>Don't have an account? <a href="{% url 'AdminSignUp' %}">Register here</a></p>
+        </div>
+    </div>
+</body>
+</html>
