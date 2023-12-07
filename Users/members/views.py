@@ -28,7 +28,7 @@ from django.http import HttpResponse
 from .models import Appointment
 from . import models
 from django.db.models import TextField
-
+from .models import AdminProfile
 
 
 
@@ -97,7 +97,14 @@ def LoginPage(request):
 
 @login_required(login_url='SignInPage')
 def MyAccount(request):
-  return render (request,'Account.html')
+    # Get the user's data from the database
+    user_data = {
+        'name': request.user.get_full_name(),
+        'email': request.user.email,
+        'username': request.user.username,
+    }
+    return render(request, 'Account.html', {'user_data': user_data})
+
 
 def SignOut(request):
     logout(request)
@@ -401,4 +408,155 @@ def schedule_appointment(request):
 
     return render(request, 'schedule_appointment.html') 
 
-    
+
+def AdminSignUpPage(request):
+    if request.method == 'POST':
+        fname = request.POST.get('fname')
+        uname = request.POST.get('username')
+        email = request.POST.get('email')
+        pnum = request.POST.get('phoneNum')
+        pass1 = request.POST.get('pass1')
+        pass2 = request.POST.get('pass2')
+        gender = request.POST.get('gender')
+
+        # Check if the username already exists
+        if User.objects.filter(username=uname).exists():
+            messages.error(request, "Username already exists. Please choose a different username.")
+            return redirect('AdminSignUp')  # Redirect back to the signup page with an error message
+
+        # Check if passwords match
+        if pass1 != pass2:
+            messages.error(request, "Your Password and Confirm Password are not the same!")
+            return redirect('AdminSignUp')  # Redirect back to the signup page with an error message
+
+        # Create the User instance
+        my_user = User.objects.create_user(username=uname, email=email, password=pass1)
+
+        # Create the AdminProfile instance
+        admin_profile = AdminProfile(full_name=fname, username=uname, email=email, phone_number=pnum, password=pass1, gender=gender)
+        admin_profile.save()
+
+        return redirect('AdminLogin')
+
+    return render(request, 'adminSignUp.html')
+
+def adminLogin(request):
+    if request.method == 'POST':
+        # Handle admin login logic here
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Authenticate the admin user
+        admin_user = authenticate(request, username=username, password=password)
+
+        if admin_user is not None:
+            # Login the admin user
+            login(request, admin_user)
+            return redirect('AdminPage')  # Redirect to the admin dashboard
+        else:
+            messages.error(request, 'Admin login failed. Please check your credentials.')
+
+    return render(request, 'AdminLogin.html')
+
+@login_required(login_url='AdminLogin')  # Redirect to admin login page if not authenticated
+def admin_dashboard(request):
+    # Admin dashboard logic goes here
+    return render(request, 'AdminPage.html')
+
+def choose_login(request):
+    return render(request, 'ChooseLogin.html')
+
+def adminPage(request):
+    # Get all users
+    all_users = User.objects.all()
+
+    # Check if a user_id is provided for editing or deleting
+    user_id = request.GET.get('user_id')
+    if user_id:
+        # Get the user and user profile
+        user = User.objects.get(id=user_id)
+        user_profile = UserProfile.objects.get(user=user)
+
+        # Handle delete action
+        if request.method == 'POST' and request.POST.get('action') == 'delete':
+            user.delete()
+            return redirect('AdminPage')
+
+        # Handle edit action
+        elif request.method == 'POST' and request.POST.get('action') == 'edit':
+            # Update user profile data (you can add validation)
+            user_profile.full_name = request.POST.get('full_name')
+            user_profile.phone_number = request.POST.get('phone_number')
+            user_profile.gender = request.POST.get('gender')
+            user_profile.save()
+
+            # Redirect back to adminPage
+            return redirect('adminPage')
+
+        # Pass the user and user profile to the template for editing
+        return render(request, 'adminPageEdit.html', {'user': user, 'user_profile': user_profile})
+
+    # Pass all users to the template
+    return render(request, 'AdminPage.html', {'all_users': all_users})
+
+def adminPageDelete(request):
+    try:
+        if request.method == 'POST':
+            selected_user_ids = request.POST.getlist('selected_users[]')
+
+            if selected_user_ids:
+                # Print selected user IDs for debugging
+                print("Selected User IDs:", selected_user_ids)
+
+                # Delete selected users
+                User.objects.filter(id__in=selected_user_ids).delete()
+
+        # Redirect back to the admin page after deletion
+        return redirect('AdminPage')
+
+    except Exception as e:
+        # Print the exception for debugging
+        print("Error:", e)
+        return HttpResponseServerError("Internal Server Error")
+
+@login_required(login_url='AdminLogin')
+def adminPageEdit(request):
+    return render(request, 'adminPageEdit.html')
+
+def adminUpdateProfile(request):
+    if request.method == 'POST':
+        selected_user_ids = request.POST.getlist('selected_users[]')
+
+        for user_id in selected_user_ids:
+            try:
+                user_profile = UserProfile.objects.get(user_id=user_id)
+
+                new_fullname = request.POST.get(f'fullname_{user_id}')
+                new_username = request.POST.get(f'username_{user_id}')
+                new_email = request.POST.get(f'email_{user_id}')
+                new_phone = request.POST.get(f'phone_{user_id}')
+                new_password = request.POST.get(f'password_{user_id}')
+
+                # Update user's data in the database
+                user_profile.fullname = new_fullname
+                user_profile.user.username = new_username
+                user_profile.user.email = new_email
+                user_profile.phone_number = new_phone
+
+                if new_password:
+                    user_profile.user.set_password(new_password)
+
+                user_profile.user.save()
+                user_profile.save()
+            except UserProfile.DoesNotExist:
+                # Handle the case where the user profile does not exist
+                pass
+
+        # Redirect after updating profiles
+        return redirect('/AdminPage')
+
+    # Handle GET requests or errors
+    # You may want to add error handling for invalid POST requests here
+
+    # Render a template if needed
+    return render(request, 'update_account.html')
