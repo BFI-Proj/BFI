@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=20, choices=GENDER_CHOICES)
 
     def __str__(self):
-        return self.username
+        return f"{self.user.username} - {self.full_name} - {self.email} - {self.phone_number} - {self.gender}"
     
 def upload_to_img_directory(instance, filename):
     # This function defines the subdirectory within your MEDIA_ROOT/img
@@ -58,7 +58,7 @@ class Appointment(models.Model):
     purpose = models.TextField()
 
     def __str__(self):
-        return f"{self.user.username} - {self.date} - {self.time}"
+        return f"{self.user.username} - {self.date} - {self.time} - {self.purpose}"
     
 
 class AdminProfile(models.Model):
