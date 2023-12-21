@@ -97,13 +97,26 @@ def LoginPage(request):
 
 @login_required(login_url='SignInPage')
 def MyAccount(request):
-    # Get the user's data from the database
+    try:
+        # Try to get the user's profile data
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        # If the profile does not exist, create an empty profile
+        user_profile = UserProfile()
+
+ 
+
+    # Get the user's basic data from the database
     user_data = {
         'name': request.user.get_full_name(),
         'email': request.user.email,
         'username': request.user.username,
     }
-    return render(request, 'Account.html', {'user_data': user_data})
+
+    print("User Data:", user_data)
+
+    return render(request, 'Account.html', {'user_data': user_data, 'user_profile': user_profile})
+
 
 
 def SignOut(request):
@@ -392,6 +405,7 @@ def schedule_appointment(request):
         email = request.POST.get('email')
         date = request.POST.get('date')
         time = request.POST.get('time')
+        purpose = request.POST.get('purpose')  # Retrieve the purpose from the form
 
         # Create an Appointment object and save it to the database
         appointment = Appointment.objects.create(
@@ -400,14 +414,13 @@ def schedule_appointment(request):
             email=email,
             date=date,
             time=time,
-            purpose = TextField()
+            purpose=purpose,  # Assign the purpose from the form data
         )
 
-        # Redirect to a success page or wherever you want
+         # Redirect to a success page or wherever you want
         messages.success(request, 'Appointment is set successfully') # Redirect to a success URL
 
     return render(request, 'schedule_appointment.html') 
-
 
 def AdminSignUpPage(request):
     if request.method == 'POST':
@@ -465,6 +478,13 @@ def admin_dashboard(request):
 
 def choose_login(request):
     return render(request, 'ChooseLogin.html')
+
+@login_required(login_url='SignInPage')
+def AppointmentStatus(request):
+    # Filter appointments based on the current user
+    appointments = Appointment.objects.filter(user=request.user)
+
+    return render(request, 'AppointmentStatus.html', {'appointments': appointments})
 
 def adminPage(request):
     # Get all users
