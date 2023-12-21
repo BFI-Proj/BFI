@@ -389,7 +389,7 @@ def healthy_foods(request):
 
 def unhealthy_foods(request):
     # Retrieve unhealthy foods from your database or any other source
-    unhealthy_foods_list = FoodItem.objects.filter(category='unhealthy')
+    unhealthy_foods_list = FoodItem.objects.filter(category='Unhealthy')
     context = {'foods': unhealthy_foods_list}
     return render(request, 'UnhealthyFood.html', context)
 
