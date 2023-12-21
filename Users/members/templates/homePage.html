@@ -8,61 +8,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balance Food Intake</title>
     <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <style>
         body {
-            font-family: 'Biome', sans-serif; /* Add the font-family to the body */
+            font-family: 'Biome', sans-serif;
         }
 
         .card-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around; /* Adjust as needed */
-            margin-top: 20px; /* Add space between the search results and cards */
+            justify-content: space-around;
+            margin-top: 20px;
         }
 
         .card {
-            width: 22%; /* Adjust width to fit at least 4 cards per row */
-            margin: 10px; /* Adjust margin as needed */
-            border: 2px solid #FF9F00; /* Add border for visibility */
-            border-radius: 15px; /* Optional: Add border-radius for rounded corners */
-            overflow: hidden; /* Ensure images stay within the card */
+            width: 22%;
+            margin: 10px;
+            border: 2px solid #FF9F00;
+            border-radius: 15px;
+            overflow: hidden;
         }
 
         .card-image img {
-            width: 100%; /* Ensure images take full width within the card */
-            height: auto; /* Maintain aspect ratio */
+            width: 100%;
+            height: auto;
         }
 
         .card-details {
             padding: 10px;
             color: black;
         }
+
         .card {
-    border: 2px solid #FF9F00;
-    border-radius: 25px;
-    margin: 10px;
-    max-width: 345px; /* Adjust the maximum width as needed */
-    background-color: #FF9F00;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-}
+            border: 2px solid #FF9F00;
+            border-radius: 25px;
+            margin: 10px;
+            max-width: 345px;
+            background-color: #FF9F00;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
 
-.card-image {
-    max-height: 140px; /* Adjust image height as needed */
-    overflow: hidden;
-    text-align: center;
-}
+        .card-image {
+            max-height: 140px;
+            overflow: hidden;
+            text-align: center;
+        }
 
-.card-image img {
-    max-width: 100%;
-    max-height: 100%;
-    overflow: hidden;
-}
+        .card-image img {
+            max-width: 100%;
+            max-height: 100%;
+            overflow: hidden;
+        }
 
-.card-details {
-    padding: 10px;
-    font-family: 'Biome', sans-serif;
-}
+        .card-details {
+            padding: 10px;
+            font-family: 'Biome', sans-serif;
+        }
 
         .buttons {
             text-align: center;
@@ -71,6 +74,10 @@
 
         .buttons button {
             margin: 5px;
+        }
+
+        .search-bar-container{
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -82,6 +89,7 @@
             </a>
             <ul>
                 <li><a href="{% url 'HomePage' %}">About Us</a></li>
+                <li><a href="{% url 'schedule_appointment' %}">Appointment</a></li>
                 <li><a href="{% url 'MyAccountPage' %}">Account</a></li>
             </ul>
         </div>
@@ -93,11 +101,7 @@
                     <button type="submit" class="search-button">Search</button>
                 </div>
             </form>
-            <div class="buttons">
-                
-                <a href="{% url 'schedule_appointment' %}"><button class="random-button">APPOINTMENT</button></a>
-            </div>
-            <div class="card-container">
+            <div class="slick-slider">
                 {% for item in food_items %}
                     <div class="card">
                         <a href="{% url 'item_page' item.id %}" style="text-decoration: none; color: inherit;">
@@ -117,17 +121,22 @@
                     </div>
                 {% endfor %}
             </div>
-            
         </div>
     </div>
+    <!-- Slick Carousel JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if the page is not already on the 'random_item' view
-            if (!window.location.href.includes("{% url 'random_item' %}")) {
-                window.location.href = "{% url 'random_item' %}";
-            }
+        $(document).ready(function(){
+            $('.slick-slider').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                prevArrow: '<button class="slick-prev">&#9665;</button>',
+                nextArrow: '<button class="slick-next">&#9655;</button>',
+            });
         });
     </script>
-
 </body>
 </html>
+

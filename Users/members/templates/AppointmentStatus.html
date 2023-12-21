@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Status</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'appointment.css' %}">
+    <style>
+        body {
+            font-family: 'Biome', sans-serif;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto; /* Center the table */
+            border-collapse: collapse;
+            border: 2px solid #FF9F00;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 2px solid #FF9F00;
+        }
+
+        th {
+            background-color: #FF9F00;
+            color: white;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>Appointment Status</h1>
+
+        {% if appointments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.user.username }}</td>
+                            <td>{{ appointment.name }}</td>
+                            <td>{{ appointment.email }}</td>
+                            <td>{{ appointment.date }}</td>
+                            <td>{{ appointment.time }}</td>
+                            <td>{{ appointment.purpose }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No appointments available.</p>
+        {% endif %}
+
+        <div class="buttons">
+            <a href="{% url 'FoodPage' %}"><button class="food-button">Go Back</button></a>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+

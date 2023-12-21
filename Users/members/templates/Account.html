@@ -1,21 +1,19 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
-	<link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />   
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css?family=Raleway:900" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'account.css' %}">
     <title>My Account</title>
 </head>
+
 <body>
     <div class="container">
         <p><a href="{% url 'FoodPage' %}" class="edit-profile-button">Back</a></p>
@@ -23,13 +21,24 @@
         <img src="{% static 'img/raya.png' %}" alt="Profile Picture" class="profile-picture">
         <p>Welcome to your profile page. Here, you can view your profile details and information.</p>
 
-            <p><strong>Username:</strong> {{ user_data.username }}</p>
-            <p><strong>Email:</strong> {{ user_data.email }}</p>
-            
-    
+        <p><strong>Username:</strong> {{ user_data.username }}</p>
+        <p><strong>Email:</strong> {{ user_data.email }}</p>
+        
+
+        {% if user_profile %}
+            <p><strong>Full Name:</strong> {{ user_profile.full_name }}</p>
+            <p><strong>Phone Number:</strong> {{ user_profile.phone_number }}</p>
+            <p><strong>Gender:</strong> {{ user_profile.get_gender_display }}</p>
+            <!-- Assuming that get_gender_display returns the human-readable version of the gender field -->
+        {% else %}
+            <p>No additional profile information available.</p>
+        {% endif %}
 
         <p><a href="{% url 'EditProfile' %}" class="edit-profile-button">Edit Profile</a></p>
+        <p><a href="{% url 'AppointmentStatus' %}" class="edit-profile-button">Appointment</a></p>
         <p><a href="{% url 'SignOut' %}">Log Out</a></p>
     </div>
 </body>
+
 </html>
+
