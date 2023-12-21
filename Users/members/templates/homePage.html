@@ -127,11 +127,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the page is not already on the 'random_item' view
+            if (!window.location.href.includes("{% url 'random_item' %}")) {
+                window.location.href = "{% url 'random_item' %}";
+            }
+        });
+    </script>
+    <script>
         $(document).ready(function(){
             $('.slick-slider').slick({
                 infinite: true,
                 slidesToShow: 3,
                 slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
                 prevArrow: '<button class="slick-prev">&#9665;</button>',
                 nextArrow: '<button class="slick-next">&#9655;</button>',
             });
@@ -139,4 +149,3 @@
     </script>
 </body>
 </html>
-
