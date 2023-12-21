@@ -53,7 +53,7 @@ path('adminLogin/', views.adminLogin, name='AdminLogin'),
  path('adminPage/', views.adminPage, name='AdminPage'),
  path('adminPageEdit/', views.adminPageEdit, name='AdminPageEdit'),
 path('adminPageDelete/', views.adminPageDelete, name='AdminPageDelete'),
-
+path('AppointmentStatus/', views.AppointmentStatus, name='AppointmentStatus'),
 
 ]
 
